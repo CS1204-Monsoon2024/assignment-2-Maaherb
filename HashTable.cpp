@@ -61,9 +61,10 @@ public:
     }
 
     void insert(int key) {
-    if (static_cast<float>(count + 1) / size > 0.8) {
+    if (static_cast<float>(count) / size >= 0.8) {
         resize();
     }
+
     int index = hash(key);
     int i = 0;
     while (table[(index + i * i) % size] != -1 && table[(index + i * i) % size] != -2) {
