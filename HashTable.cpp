@@ -59,25 +59,6 @@ public:
         count = 0;
     }
 
-    HashTable(HashTable&& other) noexcept {
-        size = other.size;
-        count = other.count;
-        table = std::move(other.table);
-        other.size = 0;
-        other.count = 0;
-    }
-
-    HashTable& operator=(HashTable&& other) noexcept {
-        if (this != &other) {
-            size = other.size;
-            count = other.count;
-            table = std::move(other.table);
-            other.size = 0;
-            other.count = 0;
-        }
-        return *this;
-    }
-
     void insert(int key) {
         int index = hash(key);
         int i = 0;
@@ -94,7 +75,7 @@ public:
         }
         table[(index + i * i) % size] = key;
         count++;
-        if (static_cast<float>(count) / size > 0.7) {
+        if (static_cast<float>(count) / size > 0.8) {
             resize();
         }
     }
