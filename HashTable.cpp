@@ -84,7 +84,7 @@ public:
         }
         table[(index + i * i) % size] = key;
         count++;
-        if (static_cast<float>(count) / size > 0.5) {  // Adjusted threshold to reduce frequent resizing
+        if (static_cast<float>(count) / size > 0.5) {  
             resize();
         }
     }
@@ -122,15 +122,16 @@ public:
     }
 
     void printTable() {
-        for (int i = 0; i < size; i++) {
-            if (table[i] == -1) {
-                std::cout << "- ";
-            } else if (table[i] == -2) {
-                std::cout << "- ";
-            } else {
-                std::cout << table[i] << " ";
-            }
+    for (int i = 0; i < size; i++) {
+        if (table[i] == -1 || table[i] == -2) {
+            std::cout << "-"; 
+        } else {
+            std::cout << table[i];
         }
-        std::cout << std::endl;
+        if (i != size - 1) {
+            std::cout << " ";  
+        }
     }
+    std::cout << std::endl;
+}
 };
