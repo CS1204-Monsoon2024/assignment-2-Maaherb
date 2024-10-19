@@ -79,7 +79,7 @@ public:
         count++;
         std::cout << "Inserted " << key << " at index " << (index + i * i) % size << std::endl;
         std::cout << "Current load factor: " << static_cast<float>(count) / size << std::endl;
-        if (static_cast<float>(count) / size > 0.8) {
+        if (static_cast<float>(count + 1) / size > 0.8) {
             resize();
         }
     }
