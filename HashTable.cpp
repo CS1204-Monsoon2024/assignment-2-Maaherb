@@ -7,8 +7,8 @@ private:
     std::vector<int> table;
     int size;
     int count;
-    const int EMPTY = -1;
-    const int DELETED = -2;
+    static const int EMPTY = -1;
+    static const int DELETED = -2;
 
     int hash(int key) {
         return key % size;
@@ -50,6 +50,9 @@ public:
         table = std::vector<int>(size, EMPTY);
         count = 0;
     }
+
+    HashTable(const HashTable& other) = delete;
+    HashTable& operator=(const HashTable& other) = delete;
 
     void insert(int key) {
         int index = hash(key);
