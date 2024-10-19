@@ -38,13 +38,7 @@ private:
         count = 0;
         for (int i = 0; i < oldTable.size(); i++) {
             if (oldTable[i] != -1 && oldTable[i] != -2) {
-                int key = oldTable[i];
-                int index = hash(key);
-                int j = 0;
-                while (table[(index + j * j) % size] != -1) {
-                    j++;
-                }
-                table[(index + j * j) % size] = key;
+                table[i] = oldTable[i];
                 count++;
             }
         }
