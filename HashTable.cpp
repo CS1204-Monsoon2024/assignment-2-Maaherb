@@ -7,8 +7,6 @@ private:
     std::vector<int> table;
     int size;
     int count;
-    static const int EMPTY = -1;
-    static const int DELETED = -2;
 
     int hash(int key) {
         return key % size;
@@ -34,11 +32,11 @@ private:
     void resize() {
         int newSize = nextPrime(size * 2);
         std::vector<int> oldTable = table;
-        table = std::vector<int>(newSize, EMPTY);
+        table = std::vector<int>(newSize, -1);
         size = newSize;
         count = 0;
         for (int key : oldTable) {
-            if (key != EMPTY && key != DELETED) {
+            if (key != -1 && key != -2) {
                 insert(key);
             }
         }
@@ -47,17 +45,33 @@ private:
 public:
     HashTable(int initialSize) {
         size = nextPrime(initialSize);
-        table = std::vector<int>(size, EMPTY);
+        table = std::vector<int>(size, -1);
         count = 0;
     }
 
-    HashTable(const HashTable& other) = delete;
-    HashTable& operator=(const HashTable& other) = delete;
+    HashTable(HashTable&& other) noexcept {
+        size = other.size;
+        count = other.count;
+        table = std::move(other.table);
+        other.size = 0;
+        other.count = 0;
+    }
+
+    HashTable& operator=(HashTable&& other) noexcept {
+        if (this != &other) {
+            size = other.size;
+            count = other.count;
+            table = std::move(other.table);
+            other.size = 0;
+            other.count = 0;
+        }
+        return *this;
+    }
 
     void insert(int key) {
         int index = hash(key);
         int i = 0;
-        while (table[(index + i * i) % size] != EMPTY && table[(index + i * i) % size] != DELETED) {
+        while (table[(index + i * i) % size] != -1 && table[(index + i * i) % size] != -2) {
             if (table[(index + i * i) % size] == key) {
                 std::cout << "Duplicate key insertion is not allowed" << std::endl;
                 return;
@@ -78,9 +92,9 @@ public:
     void remove(int key) {
         int index = hash(key);
         int i = 0;
-        while (table[(index + i * i) % size] != EMPTY) {
+        while (table[(index + i * i) % size] != -1) {
             if (table[(index + i * i) % size] == key) {
-                table[(index + i * i) % size] = DELETED;
+                table[(index + i * i) % size] = -2;
                 count--;
                 return;
             }
@@ -95,7 +109,7 @@ public:
     int search(int key) {
         int index = hash(key);
         int i = 0;
-        while (table[(index + i * i) % size] != EMPTY) {
+        while (table[(index + i * i) % size] != -1) {
             if (table[(index + i * i) % size] == key) {
                 return (index + i * i) % size;
             }
@@ -109,9 +123,9 @@ public:
 
     void printTable() {
         for (int i = 0; i < size; i++) {
-            if (table[i] == EMPTY) {
+            if (table[i] == -1) {
                 std::cout << "- ";
-            } else if (table[i] == DELETED) {
+            } else if (table[i] == -2) {
                 std::cout << "- ";
             } else {
                 std::cout << table[i] << " ";
