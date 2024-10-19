@@ -88,7 +88,6 @@ public:
             if (table[(index + i * i) % size] == key) {
                 table[(index + i * i) % size] = -2;
                 count--;
-                std::cout << "Removed " << key << " from index " << (index + i * i) % size << std::endl;
                 return;
             }
             i++;
