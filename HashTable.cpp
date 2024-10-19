@@ -94,7 +94,7 @@ public:
         }
         table[(index + i * i) % size] = key;
         count++;
-        if (static_cast<float>(count) / size > 0.7) {  // Adjusted threshold to reduce frequent resizing
+        if (static_cast<float>(count) / size > 0.7) {
             resize();
         }
     }
