@@ -50,6 +50,8 @@ private:
         }
         table[(index + i * i) % size] = key;
         count++;
+        
+        
     }
 
 public:
