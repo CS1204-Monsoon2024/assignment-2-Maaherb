@@ -61,26 +61,25 @@ public:
     }
 
     void insert(int key) {
-        if (static_cast<float>(count + 1) / size > 0.8) {
-            resize();
-        }
-        int index = hash(key);
-        int i = 0;
-        while (table[(index + i * i) % size] != -1 && table[(index + i * i) % size] != -2) {
-            if (table[(index + i * i) % size] == key) {
-                std::cout << "Duplicate key insertion is not allowed" << std::endl;
-                return;
-            }
-            i++;
-            if (i >= size) {
-                std::cout << "Max probing limit reached!" << std::endl;
-                return;
-            }
-        }
-        table[(index + i * i) % size] = key;
-        count++;
-        
+    if (static_cast<float>(count + 1) / size > 0.8) {
+        resize();
     }
+    int index = hash(key);
+    int i = 0;
+    while (table[(index + i * i) % size] != -1 && table[(index + i * i) % size] != -2) {
+        if (table[(index + i * i) % size] == key) {
+            std::cout << "Duplicate key insertion is not allowed" << std::endl;
+            return;
+        }
+        i++;
+        if (i >= size) {
+            std::cout << "Max probing limit reached!" << std::endl;
+            return;
+        }
+    }
+    table[(index + i * i) % size] = key;
+    count++;
+}
 
     void remove(int key) {
         int index = hash(key);
