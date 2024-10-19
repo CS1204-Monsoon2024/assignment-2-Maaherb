@@ -75,7 +75,7 @@ public:
         }
         table[(index + i * i) % size] = key;
         count++;
-        if (static_cast<float>(count + 1) / size > 0.8) {
+        if (static_cast<float>(count) / size > 0.8) {
             resize();
         }
     }
