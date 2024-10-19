@@ -30,7 +30,6 @@ private:
     }
 
     void resize() {
-        std::cout << "Resizing table from size " << size << " to size " << nextPrime(size * 2) << std::endl;
         int newSize = nextPrime(size * 2);
         std::vector<int> oldTable = table;
         table = std::vector<int>(newSize, -1);
@@ -62,6 +61,9 @@ public:
     }
 
     void insert(int key) {
+        if (static_cast<float>(count + 1) / size > 0.8) {
+            resize();
+        }
         int index = hash(key);
         int i = 0;
         while (table[(index + i * i) % size] != -1 && table[(index + i * i) % size] != -2) {
@@ -77,11 +79,7 @@ public:
         }
         table[(index + i * i) % size] = key;
         count++;
-        std::cout << "Inserted " << key << " at index " << (index + i * i) % size << std::endl;
-        std::cout << "Current load factor: " << static_cast<float>(count) / size << std::endl;
-        if (static_cast<float>(count + 1) / size > 0.8) {
-            resize();
-        }
+        
     }
 
     void remove(int key) {
