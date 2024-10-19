@@ -35,10 +35,9 @@ private:
         table = std::vector<int>(newSize, -1);
         size = newSize;
         count = 0;
-        for (int i = 0; i < oldTable.size(); i++) {
-            if (oldTable[i] != -1 && oldTable[i] != -2) {
-                table[i] = oldTable[i];
-                count++;
+        for (int key : oldTable) {
+            if (key != -1 && key != -2) {
+                insertWithoutResize(key);
             }
         }
     }
